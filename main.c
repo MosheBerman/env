@@ -14,7 +14,9 @@
 
 
 extern char **environ;
-extern char *etext, edata, end;
+extern char *etext;
+extern char *edata;
+extern char *end;
 
 
 char* myenv(char *name);
