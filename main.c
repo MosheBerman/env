@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/utsname.h>	//	Used for getting OS Name
+#include <limits.h>
 #include <unistd.h>
 
 
@@ -62,13 +63,17 @@ int main(int argc, const char * argv[])
 	pid_t processID = getpid();
 	pid_t parentProcessID = getppid();
 	pid_t userID = getuid();
-	
+	long maxInput = sysconf(_SC_LINE_MAX);
+	long maxArgs = sysconf(_SC_ARG_MAX);
+
 	/*	Print System Calls
 	 */
 	printf("\n---- System Calls ---- \n\n");
 	printf("Process ID: %i\n", processID);
 	printf("Parent process ID: %i\n", parentProcessID);
 	printf("User ID: %i\n", userID);
+	printf("Max length of input: %li\n", maxInput);
+	printf("Max size of argv[] and envp[]: %li\n\n", maxArgs);
 
     return 0;
 }
