@@ -10,8 +10,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/utsname.h>	//	Used for getting OS Name
-#include <limits.h>
+#include <limits.h>			//	Used for max line and max args
 #include <unistd.h>
+#include <grp.h>			//	Used for group ID
+
 
 
 extern char **environ;
@@ -32,6 +34,7 @@ int main(int argc, const char * argv[])
 	
 	struct utsname unameData;
 	uname(&unameData);
+	
 	
 	/*	Retrieve and print out environment variables
 	 */
@@ -54,15 +57,16 @@ int main(int argc, const char * argv[])
 	/*	Print out the Process data
 	 */
 	printf("---- Process Data ---- \n\n");
-	printf("etext: %s\n", &etext);
-	printf("edata: %s\n", &edata);
-	printf("end: %s\n", &end);
+//	printf("etext: %s\n", &etext);
+//	printf("edata: %s\n", &edata);
+//	printf("end: %s\n", &end);
 	
 	/*	Execute system calls
 	 */
 	pid_t processID = getpid();
 	pid_t parentProcessID = getppid();
 	pid_t userID = getuid();
+	struct group groupID = *getgrgid(userID);
 	long maxInput = sysconf(_SC_LINE_MAX);
 	long maxArgs = sysconf(_SC_ARG_MAX);
 
@@ -72,6 +76,7 @@ int main(int argc, const char * argv[])
 	printf("Process ID: %i\n", processID);
 	printf("Parent process ID: %i\n", parentProcessID);
 	printf("User ID: %i\n", userID);
+	printf("Group ID: %i\n", groupID.gr_gid);
 	printf("Max length of input: %li\n", maxInput);
 	printf("Max size of argv[] and envp[]: %li\n\n", maxArgs);
 
