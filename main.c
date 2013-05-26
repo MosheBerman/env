@@ -14,7 +14,7 @@
 
 
 extern char **environ;
-extern char etext, edata, end;
+extern char _etext, _edata, _end;
 
 
 char* myenv(char *name);
@@ -51,21 +51,22 @@ int main(int argc, const char * argv[])
 	/*	Print out the Process data
 	 */
 	printf("---- Process Data ---- \n\n");
-	printf("etext: %s\n", &etext);
-	printf("edata: %s\n", &edata);
-	printf("end: %s\n", &end);
+	printf("etext: %s\n", &_etext);
+	printf("edata: %s\n", &_edata);
+	printf("end: %s\n", &_end);
 	
 	/*	Execute system calls
 	 */
 	pid_t processID = getpid();
 	pid_t parentProcessID = getppid();
 	pid_t userID = getuid();
-	pid_t groupID = reu
 	
 	/*	Print System Calls
 	 */
 	printf("\n---- System Calls ---- \n\n");
-	
+	printf("Process ID: %i", processID);
+	printf("Parent process ID: %i", parentProcessID);
+	printf("User ID: %i", userID);
 
     return 0;
 }
